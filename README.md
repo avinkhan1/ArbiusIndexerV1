@@ -27,14 +27,22 @@ source aius_indexer/bin/activate
 pip install -r requirements.txt
 
 
-4. Add environment variables to .env.nova
+4. Create .env.nova if it doesnt exist and add the below environment variables
+
 NOVA_SCAN_API_KEY={your_nova_scan_api_key}
+
 VALIDATOR_ADDRESS={your_validator_address}
+
 NOVA_API_URL=https://api-nova.arbiscan.io/api
+
 ARBIUS_V1_CA=0xadcabea4DFF651F7F87534B617AC77Ab8a0E307c
+
 RPC_URL={your_rpc_url}
+
 START_BLOCK=48538813
+
 END_BLOCK=49826855
+
 SLOT_SIZE=3000
 
 
