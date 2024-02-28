@@ -7,7 +7,8 @@ from config.log_config import LOG_CONFIG
 
 from tx_utils import (
     get_transactions,
-    get_task_id
+    get_task_id,
+    claim_solution
 )
 from io_utils import (
     save_task_ids,
@@ -16,7 +17,8 @@ from io_utils import (
     load_block_slots_from_file,
     initialize_block_slots,
     save_block_slots_to_file,
-    update_block_slots_with_new_range
+    load_unclaimed_solutions,
+    update_block_slots_with_new_range,
 )
 
 
@@ -108,7 +110,7 @@ def process_block_slots(block_slots_file='block_slots.json', max_transactions=99
                 END_BLOCK = slot.get("last_block")
 
                 # Ensure not to exceed the rate limit
-                if call_count >= 5:
+                if call_count >= 4:
                     time.sleep(1)  # Wait for 1 second after every 5 calls
                     call_count = 0  # Reset the call count
 
@@ -161,11 +163,29 @@ def fetch_unclaimed_solution():
     logger.info(f"Updated unclaimed solutions in 'unclaimed_solution.json'.")
 
 
+def process_task_ids():
+    task_ids = load_unclaimed_solutions()  # Load your list of task IDs from the JSON file
+
+    for task_id in list(task_ids):  # Use list() to create a copy of the list for safe iteration
+        try:
+            success, txn_hash = claim_solution(task_id)
+
+            if success:
+                logger.info(f"Successfully processed task ID {task_id} with transaction hash {txn_hash}")
+            else:
+                logger.info(f"Skipping task ID {task_id} due to an error")
+
+            time.sleep(1)  # Wait for 1 second to update nonce
+
+        except Exception as e:
+            logger.error(f"Error claiming solution for task ID {task_id}: {e}")
+
 
 def main():
     manage_blocks_into_slots()
     process_block_slots()
     fetch_unclaimed_solution()
+    process_task_ids()
 
 
 if __name__ == "__main__":

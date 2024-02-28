@@ -105,3 +105,8 @@ def save_unclaimed_solutions(new_unclaimed_solutions, file_path='unclaimed_solut
     with open(file_path, 'w') as file:
         json.dump(list(updated_unclaimed_solutions), file, indent=4)
 
+
+def load_unclaimed_solutions():
+    # Implement loading logic from your JSON file
+    with open('unclaimed_solution.json', 'r') as file:
+        return json.load(file)

@@ -3,7 +3,7 @@
 ## Description
 
 This project is designed to process blockchain transactions, specifically focusing on managing and identifying unclaimed solutions within the Aius ecosystem. It divides transactions into manageable slots, processes each slot to extract task IDs, and identifies unclaimed solutions.
-Basically after running the program successfully which takes a couple minuted, the list of unclaimed solution will be populated in unclaimed_solution.json
+Basically after running the program successfully which takes a couple minuted, the list of unclaimed solution will be populated in unclaimed_solution.json. Then the unclaimed solution will be interated on and then claimed.
 ## Setup
 
 ### Prerequisites
@@ -35,7 +35,9 @@ VALIDATOR_ADDRESS={your_validator_address}
 
 NOVA_API_URL=https://api-nova.arbiscan.io/api
 
-ARBIUS_V1_CA=0xadcabea4DFF651F7F87534B617AC77Ab8a0E307c
+ARBIUS_CA=0x3ba380bf035a02cb0a4a5001c73b831de3e7033e
+
+ARBIUS_PROXY_CA=0x3bf6050327fa280ee1b5f3e8fd5ea2efe8a6472a
 
 RPC_URL={your_rpc_url}
 
@@ -44,6 +46,8 @@ START_BLOCK=48538813
 END_BLOCK=49826855
 
 SLOT_SIZE=3000
+
+PRIVATE_KEY=<your_private_key>
 
 
 5. run indexer
